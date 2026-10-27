@@ -1,0 +1,19 @@
+*&---------------------------------------------------------------------*
+*& Include ZYUVA_WEEK2_SALES_TOP
+*&---------------------------------------------------------------------*
+TYPES: BEGIN OF ty_sales,
+         vbeln TYPE vbeln_va,  " Standard Sales Document Data Element
+         erdat TYPE erdat,     " Standard Creation Date Data Element
+         auart TYPE auart,     " Standard Document Type Data Element
+         netwr TYPE netwr,     " Standard Net Value Data Element
+       END OF ty_sales.
+
+DATA: lt_sales TYPE STANDARD TABLE OF ty_sales,
+      ls_sales TYPE ty_sales.
+
+DATA: gv_erdat TYPE vbak-erdat.
+
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
+  PARAMETERS: p_vbeln TYPE vbak-vbeln OBLIGATORY. 
+  SELECT-OPTIONS: s_erdat FOR gv_erdat.         
+SELECTION-SCREEN END OF BLOCK b1.

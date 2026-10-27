@@ -1,0 +1,8 @@
+REPORT zyuva_week2_sales_report.
+
+INCLUDE zyuva_week2_sales_top.  " Points to your data definitions
+INCLUDE zyuva_week2_sales_f01.  " Points to your subroutine logic
+
+START-OF-SELECTION.
+  PERFORM get_sales_data.          
+  PERFORM generate_report_output.  

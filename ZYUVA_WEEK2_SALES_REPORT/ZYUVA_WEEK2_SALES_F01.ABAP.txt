@@ -1,0 +1,28 @@
+*&---------------------------------------------------------------------*
+*& Include ZYUVA_WEEK2_SALES_F01
+*&---------------------------------------------------------------------*
+FORM get_sales_data.
+  SELECT vbeln, erdat, auart, netwr
+    FROM vbak
+    INTO TABLE @lt_sales
+    WHERE vbeln = @p_vbeln
+      AND erdat IN @s_erdat.
+
+  IF sy-subrc <> 0.
+    MESSAGE 'No active transactional records found for criteria.'
+            TYPE 'S' DISPLAY LIKE 'E'.
+    LEAVE LIST-PROCESSING. 
+  ENDIF.
+ENDFORM.
+
+FORM generate_report_output.
+  WRITE: /2 'Sales Document', 20 'Creation Date', 38 'Doc Type', 50 'Net Value'.
+  ULINE.
+  
+  LOOP AT lt_sales INTO ls_sales.
+    WRITE: /2  ls_sales-vbeln,
+            20 ls_sales-erdat,
+            38 ls_sales-auart,
+            50 ls_sales-netwr CURRENCY 'EUR'.
+  ENDLOOP.
+ENDFORM.
